@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/react-native.svg)](https://badge.fury.io/js/react-native)
+[![npm version](https://badge.fury.io/js/react-native.svg)](https://badge.fury.io/js/react-native) [![GitHub version](https://badge.fury.io/gh/PatrickTheCodeGuy%2FPetFindr.svg)](https://badge.fury.io/gh/PatrickTheCodeGuy%2FPetFindr)
 
 # PetFindr
 
