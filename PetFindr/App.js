@@ -20,6 +20,8 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
+
+import Video from "react-native-video";
 import {
   createAppContainer,
   createStackNavigator,
@@ -32,20 +34,32 @@ class App extends Component {
   static navigationOptions = { title: "Welcome", header: null };
   render() {
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          style={{ width: "100%", height: "100%" }}
-          source={require("./dogggo.jpg")}
-        >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#F5FCFF"
+        }}
+      >
+        <Video
+          repeat={true}
+          onError={this.videoError}
+          resizeMode="cover"
+          source={require("./Doggos.mp4")}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
+          }}
+        />
+
+        <View>
           <Text style={styles.AppName}>PetFindr</Text>
-          <View
-            style={{
-              width: 200,
-              height: 50,
-              marginLeft: 100
-            }}
-          >
-            <Button
+          <View>
+            <TouchableOpacity
               onPress={() => {
                 this.props.navigation.dispatch(
                   StackActions.push({
@@ -53,11 +67,28 @@ class App extends Component {
                   })
                 );
               }}
-              title="Enter"
-              color="#23BAC4"
-            />
+              style={{
+                backgroundColor: "#3AC5CE",
+
+                width: 500,
+                height: 70,
+
+                alignItems: "center"
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 26,
+                  color: "white",
+                  marginTop: 17,
+                  textAlign: "center"
+                }}
+              >
+                Enter
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ImageBackground>
+        </View>
       </View>
     );
   }
@@ -90,6 +121,13 @@ class LandingPage extends Component {
           }}
         >
           <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                StackActions.push({
+                  routeName: "ShelterLogin"
+                })
+              );
+            }}
             style={{
               width: 120,
               height: 200,
@@ -211,7 +249,7 @@ class UserLogin extends Component {
             returnKeyType="next"
             placeholderTextColor="#ACACAC"
             onChange={text => this.setState({ email: text })}
-            value={this.state.password}
+            value={this.state.email}
           />
         </View>
         <View>
@@ -353,6 +391,251 @@ class UserLogin extends Component {
   }
 }
 
+class ShelterLogin extends Component {
+  static navigationOptions = {
+    title: "Shelter Sign Up",
+    headerTitleStyle: {
+      fontWeight: "bold",
+      marginLeft: 90
+    },
+    headerTintColor: "#fff",
+    headerStyle: { backgroundColor: "#21CDCD" }
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      phoneNumber: null,
+      shelterName: "",
+      address1: "",
+      address2: "",
+      password: "",
+      confirmPassword: ""
+    };
+  }
+  render() {
+    return (
+      <View
+        style={{ backgroundColor: "#EFEFEF", width: "100%", height: "100%" }}
+      >
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            onSubmitEditing={() => {
+              this.secondTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            placeholder="Email"
+            returnKeyType="next"
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ email: text })}
+            value={this.state.email}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            onSubmitEditing={() => {
+              this.secondTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            placeholder="Shelter Name"
+            returnKeyType="next"
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ shelterName: text })}
+            value={this.state.shelterName}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            onSubmitEditing={() => {
+              this.thirdTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            ref={input => {
+              this.secondTextInput = input;
+            }}
+            placeholder="Address Line 1"
+            returnKeyType="next"
+            secureTextEntry={true}
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ address1: text })}
+            value={this.state.address1}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            onSubmitEditing={() => {
+              this.thirdTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            ref={input => {
+              this.secondTextInput = input;
+            }}
+            placeholder="Address Line 2"
+            returnKeyType="next"
+            secureTextEntry={true}
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ address2: text })}
+            value={this.state.address2}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            onSubmitEditing={() => {
+              this.fourthTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            ref={input => {
+              this.thirdTextInput = input;
+            }}
+            returnKeyType="next"
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ password: text })}
+            value={this.state.password}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={{
+              width: 307,
+              height: 50,
+              borderRadius: 6,
+              borderColor: "#CCCCCC",
+              borderWidth: 1,
+              alignSelf: "center",
+              color: "#848080",
+              marginTop: 30,
+              paddingLeft: 5,
+              backgroundColor: "white"
+            }}
+            ref={input => {
+              this.fourthTextInput = input;
+            }}
+            keyboardType="number-pad"
+            placeholder="Zip"
+            placeholderTextColor="#ACACAC"
+            onChange={text => this.setState({ confirmPassword: text })}
+            value={this.state.confirmPassword}
+          />
+        </View>
+        <View />
+        <TouchableOpacity
+          style={{
+            marginTop: 30,
+            width: 307,
+            height: 50,
+            backgroundColor: "#3AC5CE",
+            alignSelf: "center"
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              alignSelf: "center",
+              fontSize: 26,
+              fontWeight: "bold",
+              marginTop: 5
+            }}
+          >
+            Register
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            marginTop: 30,
+            width: 307,
+            height: 50,
+            backgroundColor: "white",
+            borderWidth: 1,
+            borderColor: "#A5A5A5",
+            alignSelf: "center"
+          }}
+          onPress={() => {
+            this.props.navigation.dispatch(
+              StackActions.pop({
+                n: 1
+              })
+            );
+          }}
+        >
+          <Text
+            style={{
+              color: "#A5A5A5",
+              alignSelf: "center",
+              fontSize: 26,
+              fontWeight: "bold",
+              marginTop: 5
+            }}
+          >
+            Cancel
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -367,6 +650,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     textAlign: "center",
     marginTop: 120,
+    opacity: 0.91,
     marginBottom: 400
   },
   instructions: {
@@ -415,7 +699,8 @@ const AppNavigator = createStackNavigator(
     LandingPage: {
       screen: LandingPage
     },
-    UserLogin: { screen: UserLogin }
+    UserLogin: { screen: UserLogin },
+    ShelterLogin: { screen: ShelterLogin }
   },
   {
     initialRouteName: "Home",
