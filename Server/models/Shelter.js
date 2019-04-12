@@ -33,6 +33,10 @@ const ShelterSchema = new Schema({
   adoptionReq: {
     type: String,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
