@@ -21,10 +21,11 @@ function isAuthenticated(req, res, next) {
     next();
   });
 }
-
+// Redirect
 router.get("/redirect", (req, res) => {
   res.send("Not Auth");
 });
+
 // @route GET api/user
 // @desc Get all users (DEV)
 // @access DEVELOPER
@@ -60,6 +61,33 @@ router.post("/newuser", (req, res) => {
   });
 });
 
+// @route POST api/user/login
+// @desc Logs in a user
+// @access Public
+
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  // Bcrypt hash password
+  User.findOne({ email: email })
+
+    .then(user => {
+      console.log(user);
+      if (user && bcrypt.compareSync(password, user.password)) {
+        var token = jwt.sign({ id: user._id }, process.env.JWTSecret, {
+          expiresIn: 86400
+        });
+        res.status(201).json({ token: token, user: user });
+      } else {
+        res
+          .status(401)
+          .json({ msg: "Incorrect email/password, please try again" });
+      }
+    })
+    .catch(err => {
+      res.json({ err });
+    });
+});
+
 // @route DELETE api/user/${_id}
 // @desc deletes a user
 // @access Private
@@ -69,6 +97,50 @@ router.delete("/delete", isAuthenticated, (req, res) => {
   User.findByIdAndDelete({ _id: id })
     .then(response => res.status(200).json(response))
     .catch(err => res.status(400).json(err));
+});
+
+// @route UPDATE api/user/update/email/:id
+// @desc Updates a users email
+// @access Private
+
+router.put("/update/email/:id", isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  const { email, password } = req.body;
+  User.findById(id)
+    .updateOne({ email })
+    .then(user => {
+      res.status(200).json({ msg: `user email updated too ${email}` });
+    });
+});
+
+// @route UPDATE api/user/update/name/:id
+// @desc Updates a users name
+// @access Private
+
+router.put("/update/email/:id", isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  const { fullName } = req.body;
+  User.findById({ _id: id }).update({ fullName });
+});
+
+// @route UPDATE api/user/update/email/:id
+// @desc Updates a users password
+// @access Private
+
+router.put("/update/email/:id", isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  const { password } = req.body;
+  User.findById({ _id: id }).update({});
+});
+
+// @route UPDATE api/user/update/email/:id
+// @desc Updates a users location
+// @access Private
+
+router.put("/update/email/:id", isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  const { location } = req.body;
+  User.findById({ _id: id }).update({ location });
 });
 
 module.exports = router;

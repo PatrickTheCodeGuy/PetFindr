@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 //DB Config
-var url = process.env.DBCONFIG;
+const url = process.env.DBCONFIG;
 
 // Connect to Mongo
 mongoose
@@ -17,7 +17,6 @@ mongoose
 
 // User Route
 app.use("/api/user", user);
-// Redirect
 
 const port = process.env.PORT || 5000;
 
