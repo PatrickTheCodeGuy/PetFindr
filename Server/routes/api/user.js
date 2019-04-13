@@ -130,7 +130,10 @@ router.put("/update/email/:id", isAuthenticated, (req, res) => {
 router.put("/update/email/:id", isAuthenticated, (req, res) => {
   const id = req.params.id;
   const { password } = req.body;
-  User.findById({ _id: id }).update({});
+  let hash = bcrypt.hashSync(password, 14);
+  // set stored pass to the hash
+  let newPassword = hash;
+  User.findById({ _id: id }).update({ password: newPassword });
 });
 
 // @route UPDATE api/user/update/email/:id
