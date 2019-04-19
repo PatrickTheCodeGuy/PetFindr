@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const user = require("./routes/api/user");
 const shelter = require("./routes/api/shelter");
-
+const animal = require("./routes/api/animal");
 const app = express();
 
 app.use(express.json());
@@ -18,9 +18,10 @@ mongoose
 
 // User Route
 app.use("/api/user", user);
-
 // Shelter Route
 app.use("/api/shelter", shelter);
+// Animal Route
+app.use("/api/animal", animal);
 
 const port = process.env.PORT || 5000;
 
