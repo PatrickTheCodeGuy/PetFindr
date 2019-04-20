@@ -23,6 +23,7 @@ app.use("/api/shelter", shelter);
 // Animal Route
 app.use("/api/animal", animal);
 
+// Port default or .env port
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
